@@ -18,3 +18,11 @@ Open [http://127.0.0.1:43147](http://127.0.0.1:43147).
 ## Stack
 
 Next.js, TypeScript, Tailwind CSS, shadcn/ui.
+
+## GitHub Pages
+
+The site is a static export (`out/`). Pushing `main` to GitHub runs `.github/workflows/pages.yml` and publishes it.
+
+1. Create a GitHub repo and push this project to `main`.
+2. In the repo: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+3. The site URL is `https://<user>.github.io/<repo>/` (or `https://<user>.github.io/` if the repo is named `<user>.github.io`).

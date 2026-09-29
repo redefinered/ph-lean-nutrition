@@ -1,7 +1,17 @@
 import type { NextConfig } from "next";
 
+const basePath = process.env.BASE_PATH?.replace(/\/$/, "") || "";
+
 const nextConfig: NextConfig = {
-  /* config options here */
+  output: "export",
+  trailingSlash: true,
+  images: { unoptimized: true },
+  ...(basePath
+    ? {
+        basePath,
+        assetPrefix: basePath,
+      }
+    : {}),
 };
 
 export default nextConfig;
