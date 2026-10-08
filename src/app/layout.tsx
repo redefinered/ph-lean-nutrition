@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "7-day lean recomposition meal plan",
+  title: "6-day lean recomposition meal plan",
   description:
-    "Practical Filipino meals for a 39-year-old, 51–53 kg male: maintain weight, hit 80–95 g protein, stay lean without bulk.",
+    "Mon–Sat Filipino meals for a 39-year-old, 51–53 kg male (Sunday cheat day): maintain weight, hit 80–95 g protein, stay lean without bulk.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
