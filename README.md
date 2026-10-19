@@ -15,14 +15,38 @@ npm run dev -- --port 43147
 
 Open [http://127.0.0.1:43147](http://127.0.0.1:43147).
 
+## Install it on your phone
+
+The site is a PWA, so it installs to a home screen and works without a connection.
+
+- **iPhone / iPad:** open the site in Safari, tap the Share button, then **Add to Home Screen**.
+- **Android / desktop Chrome:** use the **Install** button in the banner, or the install icon in the address bar.
+
+Once installed it opens full screen with no browser chrome, and the last version you loaded stays readable offline.
+
 ## Stack
 
 Next.js, TypeScript, Tailwind CSS, shadcn/ui.
 
+## Icons
+
+App icons are generated from the vector mark in `scripts/generate-icons.mjs`. Edit the artwork there and re-run:
+
+```bash
+npm run icons
+```
+
+That rewrites the manifest icons in `public/icons/`, plus `favicon.ico`, `icon.png`, `icon.svg`, and `apple-icon.png` in `src/app/`.
+
 ## GitHub Pages
 
-The site is a static export (`out/`). Pushing `main` to GitHub runs `.github/workflows/pages.yml` and publishes it.
+The site is a static export served from the `gh-pages` branch at
+[redefinered.github.io/ph-lean-nutrition](https://redefinered.github.io/ph-lean-nutrition/).
+`BASE_PATH` tells Next.js which subdirectory it will be served from; the manifest and the
+service worker build their URLs from it too, so it has to be set for a subdirectory deploy.
 
-1. Create a GitHub repo and push this project to `main`.
-2. In the repo: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
-3. The site URL is `https://<user>.github.io/<repo>/` (or `https://<user>.github.io/` if the repo is named `<user>.github.io`).
+```bash
+BASE_PATH=/ph-lean-nutrition npm run build
+```
+
+Then publish `out/` to `gh-pages` (keep the `.nojekyll` file, or Pages will drop the `_next` directory).
