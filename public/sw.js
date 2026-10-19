@@ -53,19 +53,22 @@ async function trimCache(cacheName, limit) {
   }
 }
 
+const offlineResponse = () =>
+  new Response("", { status: 504, statusText: "Offline" });
+
 async function handlePageRequest(request) {
   const cache = await caches.open(SHELL_CACHE);
   try {
     const response = await fetch(request);
     if (response.ok) {
-      cache.put(request, response.clone());
+      await cache.put(request, response.clone());
     }
     return response;
   } catch {
     return (
       (await cache.match(request)) ??
       (await cache.match(startUrl)) ??
-      Response.error()
+      offlineResponse()
     );
   }
 }
@@ -75,12 +78,16 @@ async function handleAssetRequest(request) {
   const cached = await cache.match(request);
   if (cached) return cached;
 
-  const response = await fetch(request);
-  if (response.ok) {
-    await cache.put(request, response.clone());
-    trimCache(ASSET_CACHE, ASSET_CACHE_LIMIT);
+  try {
+    const response = await fetch(request);
+    if (response.ok) {
+      await cache.put(request, response.clone());
+      await trimCache(ASSET_CACHE, ASSET_CACHE_LIMIT);
+    }
+    return response;
+  } catch {
+    return offlineResponse();
   }
-  return response;
 }
 
 self.addEventListener("fetch", (event) => {
